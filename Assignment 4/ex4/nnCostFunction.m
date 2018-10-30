@@ -62,17 +62,19 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+		a2 =sigmoid([ones(m,1) X]*Theta1');
+		a3 =sigmoid([ones(m,1) a2]*Theta2');
 
+	X1 = log(a3);
+		X2 = log(1-a3);
+		y1 =  full(sparse(1:numel(y), y, 1, numel(y), num_labels));
+		y2 = 1-y1;
 
+		J = (-1/m)*sum(((X1.*y1)+(X2.*y2))(:));
+	
+		regulator = (lambda/(2*m))*(sum((Theta1(:,2:end).^2)(:)) + sum((Theta2(:,2:end).^2)(:)));
 
-
-
-
-
-
-
-
-
+		J = J + regulator;
 
 
 
